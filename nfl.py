@@ -1,7 +1,8 @@
 #! /usr/bin/env python
-
+from __future__ import absolute_import, division, print_function
 import os
 import numpy as np
+from six.moves import input
 
 """ This program verifies the Law of Conservation of Generalization or """
 """ Part ii of NFL Theorem 2 (i.e., E1(D|C)=E2(C|D)) for the space of  """
@@ -61,9 +62,8 @@ def make_base_arff_contents(task_index):
 """ Main program                                """
 
 """ Get parameter values  """
-NUM_INPUTS = input("Number of binary inputs: ")
-NUM_TEST = input("Number of test instances: ")
-classifier_key = raw_input("Classifier (be sure to write it as \'class.name\', e.g., \'trees.J48\'): ")
+NUM_INPUTS = int(input("Number of binary inputs: "))
+NUM_TEST = int(input("Number of test instances: "))
 # The minority class algorithm.
 MINORITY = 'minority'
 # A shorthand mapping of algorithm abbreviations to their full names.
@@ -74,6 +74,7 @@ classifiers = {
     'z': 'rules.ZeroR',
     'min': MINORITY
 }
+classifier_key = input("Classifier {}: ".format(classifiers.keys()))
 classifier_name = classifiers[classifier_key]
 
 """ Initialize global variables  """
@@ -128,8 +129,8 @@ else:
                 if not line.startswith(ACC_START):
                     continue
                 parts = line[len(ACC_START):].split()
-                acc = parts[1]
-                accuracies[paradigm_index] += [float(acc)/100.]
+                accuracy = parts[1]
+                accuracies[paradigm_index] += [float(accuracy)/100.]
                 paradigm_index += 1
                 if paradigm_index == 2:
                     break
